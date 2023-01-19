@@ -13,12 +13,14 @@ async function go_sec() {
     tasks.info("GO pathhhhh:" +goPath)
     tasks.info("GO pathhhhh biinnnnn:" +goPathBin)
     //const goSecInstall = (await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b `${goPathBin}``)).stdOut;
-    let commandOutput = (await tasks.execute(`cd ${goPathBin}`)).stdOut;
-    tasks.info("commandOutput:" +commandOutput)
-    let commandOutput1 = (await tasks.execute(`ls -lrt`)).stdOut;
-    tasks.info("commandOutput1111:" +commandOutput1)
+
     const abc = await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)
     if (abc) {
+      let commandOutput = (await tasks.execute(`${goPathBin}`)).stdOut;
+      tasks.info("commandOutput:" +commandOutput)
+      let commandOutput1 = (await tasks.execute(`ls -lrt`)).stdOut;
+      tasks.info("commandOutput1111:" +commandOutput1)
+
       tasks.info("GO Sec installed successfully")
       tasks.info("Executing GO sec")
       const goSecRun = ((await tasks.execute(`${goPathBin}/gosec`)).stdOut);
