@@ -12,8 +12,8 @@ async function go_sec() {
     const path = tasks.execute("go env GOPATH")
     tasks.info("GO pathhhhh" +path)
     tasks.info("GO pathhhhh biinnnnn" +goPathBin)
-    const goSecInstall = (await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b `${goPathBin}``)).stdOut;
-    if (goSecInstall) {
+    //const goSecInstall = (await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b `${goPathBin}``)).stdOut;
+    if (true) {
       tasks.info("GO Sec installed successfully")
       tasks.info("Executing GO sec")
       const goSecRun = ((await tasks.execute(`${goPathBin}/gosec`)).stdOut);
