@@ -13,7 +13,7 @@ async function go_sec() {
     if (goSecInstall) {
       tasks.info("GO Sec installed successfully")
       tasks.info("Executing GO sec")
-      const goSecRun = ((await tasks.execute(`gosec -exclude=G204,G301,G302,G304,G306 -exclude-dir=\.*test\.* ./...`)).stdOut);
+      const goSecRun = ((await tasks.execute(`${goPathBin}/gosec -exclude=G204,G301,G302,G304,G306 -exclude-dir=\.*test\.* ./... `)).stdOut);
       if (goSecRun) {
         tasks.info("Successfully ran GO sec")
       }
