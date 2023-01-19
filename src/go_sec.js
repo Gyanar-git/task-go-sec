@@ -10,7 +10,6 @@ async function go_sec() {
     tasks.appendToPath(goPathBin);
     tasks.info("Installing the GO Sec")
     const goSecInstall = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh`)).stdOut);
-    await tasks.execute(`cd ${goPathBin}`)
     await tasks.execute('ls -lrt')
     if (goSecInstall) {
       tasks.info("GO Sec installed successfully")
