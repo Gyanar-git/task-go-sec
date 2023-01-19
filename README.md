@@ -1,1 +1,1 @@
-# task-go-sec
+# task-staticcheck

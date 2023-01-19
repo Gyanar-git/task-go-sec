@@ -1,0 +1,6 @@
+{
+  "key": "npm-remote",
+  "packageType": "npm",
+  "rclass": "remote",
+  "url": "https://entplus.jfrog.io/artifactory/api/npm/npm-virtual"
+}

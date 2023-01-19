@@ -1,0 +1,6 @@
+{
+  "key": "pipelines-tasks-remote",
+  "packageType": "generic",
+  "rclass": "remote",
+  "url": "https://entplus.jfrog.io/artifactory/pipe-dev-tasks-local"
+}

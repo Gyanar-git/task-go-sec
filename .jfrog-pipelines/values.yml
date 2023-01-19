@@ -1,0 +1,6 @@
+repoPath: Gyanar-git/task-go-sec
+mainBranch: main
+gitIntegration: int_github_gyana
+artIntegration: artifactory
+goVersion: 1.19.5
+staticCheckVersion: latest

@@ -1,0 +1,9 @@
+name: go-sec
+description: Task for Go Security
+source: github.com/Gyanar-git/task-go-sec
+labels:
+  - gosec
+  - node
+  - sdk
+execution:
+  - node16 dist/index.js

@@ -1,0 +1,28 @@
+{
+  "name": "go_sec",
+  "description": "Pipelines Task for GO Sec",
+  "version": "1.0.0",
+  "main": "src/index.js",
+
+  "scripts": {
+    "dist": "ncc build src/index.js -o dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gyanar-git/task-go-sec.git"
+  },
+  "author": "gyanarp",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Gyanar-git/task-go-sec.git/issues"
+  },
+  "homepage": "https://github.com/Gyanar-git/task-go-sec.git#readme",
+  "dependencies": {
+    "jfrog-pipelines-tasks": "0.0.10"
+  },
+  "devDependencies": {
+    "@vercel/ncc": "0.34.0",
+    "jest": "28.1.3"
+  }
+}
