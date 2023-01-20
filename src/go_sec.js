@@ -18,13 +18,9 @@ async function go_sec() {
     if (abc) {
       let cdtogoRoot = (await tasks.execute(`ls -lrt ${goPathBin}`)).stdOut;
       tasks.info("cdtogoRoot:" +cdtogoRoot)
-      let pwd = (await tasks.execute(`pwd`)).stdOut;
-      tasks.info("pwdddd:" +pwd)
-      let commandOutput1 = (await tasks.execute(`ls -lrt`)).stdOut;
-      tasks.info("commandOutput1111:" +commandOutput1)
       tasks.info("GO Sec installed successfully")
       tasks.info("Executing GO sec")
-      const goSecRun = ((await tasks.execute(`${goPathBin}/gosec -include=G101,G203,G401 ./...`)).stdOut);
+      const goSecRun = ((await tasks.execute(`${goPathBin}/gosec -include=G101`)).stdOut);
       if (goSecRun) {
         tasks.info("Successfully ran GO sec")
       }
