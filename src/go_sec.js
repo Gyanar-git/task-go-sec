@@ -24,7 +24,7 @@ async function go_sec() {
       tasks.info("commandOutput1111:" +commandOutput1)
       tasks.info("GO Sec installed successfully")
       tasks.info("Executing GO sec")
-      const goSecRun = ((await tasks.execute(`${goPathBin}/gosec`)).stdOut);
+      const goSecRun = ((await tasks.execute(`${goPathBin}/gosec -include=G101,G203,G401 ./...`)).stdOut);
       if (goSecRun) {
         tasks.info("Successfully ran GO sec")
       }
