@@ -26,7 +26,7 @@ pipelines:
         readOnly:
           RESOLVE_REPO: npm-virtual
     steps:
-      - name: test_task_static_check
+      - name: test_task_go_sec
         type: Bash
         configuration:
           inputResources:
@@ -40,6 +40,7 @@ pipelines:
               input:
                 version: "{{ .Values.goVersion }}"
                 cacheIntegration: "{{ .Values.artIntegration }}"
+                staticCheckVersion: "{{ .Values.staticCheckVersion }}"
             - echo "Done installation of GO"
           onExecute:
             - pushd $res_task_go_sec_resourcePath
@@ -54,7 +55,7 @@ pipelines:
 
             # Run task
             - task: $res_task_go_sec_resourcePath
-              id: static_check
+              id: go_sec
               input:
                 name: "latest"
           onComplete:
