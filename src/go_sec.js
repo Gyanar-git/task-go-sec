@@ -16,7 +16,7 @@ async function go_sec() {
 
     const abc = await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)
     if (abc) {
-      let cdtogoRoot = (await tasks.execute(`cd ${goPathBin}`)).stdOut;
+      let cdtogoRoot = (await tasks.execute(`cd `+goPathBin)).stdOut;
       tasks.info("cdtogoRoot:" +cdtogoRoot)
       let pwd = (await tasks.execute(`pwd`)).stdOut;
       tasks.info("pwdddd:" +pwd)
