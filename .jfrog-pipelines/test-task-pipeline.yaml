@@ -54,7 +54,7 @@ pipelines:
 
             # Run task
             - task: $res_gosec_task_gitrepo_resourcePath
-              id: go_sec_run
+              id: go_sec_run_1
               input:
                 # Source code path where go.mod file resides
                 sourcePath: "/"
