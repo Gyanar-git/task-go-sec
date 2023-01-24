@@ -2,7 +2,7 @@ template: true
 valuesFilePath: ./values.yml
 
 resources:
-  - name: task_go_sec
+  - name: go_sec_task
     type: GitRepo
     configuration:
       path: {{ .Values.repoPath }}
@@ -12,7 +12,7 @@ resources:
       cloneProtocol: https
 
 pipelines:
-  - name: go_sec
+  - name: run_go_sec
     configuration:
       jfrogCliVersion: 2
       runtime:
@@ -26,11 +26,11 @@ pipelines:
         readOnly:
           RESOLVE_REPO: npm-virtual
     steps:
-      - name: test_task_go_sec
+      - name: test_task_gosec
         type: Bash
         configuration:
           inputResources:
-            - name: task_go_sec
+            - name: gosec_task_gitrepo
           integrations:
             - name: {{ .Values.artIntegration }}
         execution:
@@ -42,7 +42,7 @@ pipelines:
                 cacheIntegration: "{{ .Values.artIntegration }}"
             - echo "Done installation of GO"
           onExecute:
-            - pushd $res_task_go_sec_resourcePath
+            - pushd $res_gosec_task_gitrepo_resourcePath
             - go version
             # Configure JFrog CLI
             - jfrog npmc --repo-resolve $RESOLVE_REPO
@@ -53,8 +53,8 @@ pipelines:
             - popd
 
             # Run task
-            - task: $res_task_go_sec_resourcePath
-              id: running_go_sec
+            - task: $res_gosec_task_gitrepo_resourcePath
+              id: go_sec_run
               input:
                 # Source code path where go.mod file resides
                 sourcePath: "/"
