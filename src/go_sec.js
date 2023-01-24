@@ -37,12 +37,14 @@ function resolveSourcePath(sourcePath) {
 
 async function runGoSec(goPathBin) {
   let sourcePath = tasks.getInput("sourcePath");
+  let excludeRules = tasks.getInput("excludeRules");
+  tasks.info("Excluded rules:-" +excludeRules);
   let resolvedPath = resolveSourcePath(sourcePath);
   tasks.warning(`Please provide go source path for gosec to run`);
   const {stdOut, stdErr} = ((await tasks.execute(`cd ${resolvedPath}`)));
   tasks.info(`These errors were reported by the command but they did NOT cause the command to fail: [${stdErr}]`)
   tasks.info(`The command to completed with stdOut: [${stdOut}]]`);
-  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec ./...`)));
+  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} ./...`)));
   tasks.info(`These errors were reported by the command while executing gosec check but they did NOT cause the command to fail: [${stdErrStaticCheck}]`)
   tasks.info(`The command static check analysis completed with stdOut: [${stdOutStaticCheck}]]`);
 

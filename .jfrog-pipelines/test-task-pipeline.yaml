@@ -58,5 +58,7 @@ pipelines:
               input:
                 # Source code path where go.mod file resides
                 sourcePath: "/"
+                # Source code path where go.mod file resides
+                excludeRules: G204,G301
           onComplete:
             - echo "Step done!"
