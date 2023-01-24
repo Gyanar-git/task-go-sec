@@ -6,11 +6,7 @@ labels:
   - node
   - sdk
 input:
-  - name: goVersion
-    description: Golang version to be installed
-  - name: cacheIntegration
-    description: Artifactory integration to be used to cache the Golang installer. If not provided, the first Artifactory integration available to the step will be used.
   - name: sourcePath
-    description: Path to the go source code where go.mod file resides.If not provoded,it will uses the current working directory
+    description: Path to the go source code where go.mod file resides.If not provoded,it will use the current working directory
 execution:
   - node16 dist/index.js

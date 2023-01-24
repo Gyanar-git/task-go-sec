@@ -2,7 +2,9 @@ const tasks = require("jfrog-pipelines-tasks");
 const path = require("path");
 
 
-module.exports = { go_sec, run_gosec, install_gosec
+module.exports = { go_sec,
+  install_gosec,
+  run_gosec
 };
 
 async function go_sec() {
@@ -19,6 +21,7 @@ async function go_sec() {
       tasks.warning("Not able to find Go which is mandatory for gosec.Hence couldn’t perform static check analysis, please use setup-go task")
     }
   } catch (e) {
+    tasks.error("Unable to run go sec")
   }
 }
 
