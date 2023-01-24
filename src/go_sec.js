@@ -38,20 +38,22 @@ function resolveSourcePath(sourcePath) {
 async function runGoSec(goPathBin) {
   let sourcePath = tasks.getInput("sourcePath");
   let excludeRules = tasks.getInput("excludeRules");
+  let excludeDir = tasks.getInput("excludeDir");
   tasks.info("Excluded rules:-" +excludeRules);
+  tasks.info("excludeDir:-" +excludeDir);
   let resolvedPath = resolveSourcePath(sourcePath);
   tasks.warning(`Please provide go source path for gosec to run`);
   const {stdOut, stdErr} = ((await tasks.execute(`cd ${resolvedPath}`)));
   tasks.info(`These errors were reported by the command but they did NOT cause the command to fail: [${stdErr}]`)
   tasks.info(`The command to completed with stdOut: [${stdOut}]]`);
-  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} ./...`)));
+  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} -exclude-dir=${excludeDir} ./...`)));
   tasks.info(`These errors were reported by the command while executing gosec check but they did NOT cause the command to fail: [${stdErrStaticCheck}]`)
   tasks.info(`The command static check analysis completed with stdOut: [${stdOutStaticCheck}]]`);
 
 }
 
 async function installGoSec(goPath) {
-  tasks.info("Go is installed hence proceeding with the static code analysis")
+  tasks.info("Go is installed hence installing gosec")
   const goPathBin = path.join(goPath, "bin");
   tasks.appendToPath(goPathBin);
   const {gosecInstallStdOut,gosecInstallStdErr} = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)));
