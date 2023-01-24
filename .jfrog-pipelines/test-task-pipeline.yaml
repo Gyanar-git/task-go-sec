@@ -57,6 +57,7 @@ pipelines:
             - task: $res_task_go_sec_resourcePath
               id: go_sec
               input:
-                name: "latest"
+                # Source code path where go.mod file resides
+                sourcePath: $res_task_go_sec_resourcePath
           onComplete:
             - echo "Step done!"
