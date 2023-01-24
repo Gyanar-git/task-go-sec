@@ -53,10 +53,10 @@ pipelines:
             - npm run dist
             - popd
 
-            # Run task
+            # Execute the task
             - task: $res_task_go_sec_resourcePath
-              id: run_go_sec
+              id: running_go_sec
               input:
-                name: latest
+                version: latest
           onComplete:
             - echo "Step done!"
