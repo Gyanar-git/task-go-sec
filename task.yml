@@ -13,7 +13,5 @@ input:
       description: Artifactory integration to be used to cache the Golang installer. If not provided, the first Artifactory integration available to the step will be used.
     - name: staticCheckVersion
       description: Static check version to be used to download from the MIT license.If not provoded,it will use the latest version
-    - name: sourcePath
-      description: Path to the go source code where go.mod file resides.
 execution:
   - node16 dist/index.js
