@@ -7,6 +7,6 @@ labels:
   - sdk
 input:
   - name: sourcePath
-    description: Path to the go source code where go.mod file resides.If not provoded,it will use the current working directory
+    description: Path to the go source code where go.mod file resides.If not provided,it will use the current working directory
 execution:
   - node16 dist/index.js
