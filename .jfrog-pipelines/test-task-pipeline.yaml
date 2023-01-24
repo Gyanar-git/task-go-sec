@@ -2,7 +2,7 @@ template: true
 valuesFilePath: ./values.yml
 
 resources:
-  - name: go_sec_task
+  - name: gosec_task_gitrepo
     type: GitRepo
     configuration:
       path: {{ .Values.repoPath }}
@@ -30,7 +30,7 @@ pipelines:
         type: Bash
         configuration:
           inputResources:
-            - name: go_sec_task
+            - name: gosec_task_gitrepo
           integrations:
             - name: {{ .Values.artIntegration }}
         execution:
