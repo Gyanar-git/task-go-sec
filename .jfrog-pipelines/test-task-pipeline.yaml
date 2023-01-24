@@ -56,5 +56,7 @@ pipelines:
             # Run task
             - task: $res_task_go_sec_resourcePath
               id: run_go_sec
+              input:
+                name: latest
           onComplete:
             - echo "Step done!"
