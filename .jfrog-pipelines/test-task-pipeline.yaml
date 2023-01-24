@@ -58,7 +58,9 @@ pipelines:
               input:
                 # Source code path where go.mod file resides
                 sourcePath: "/"
-                # Source code path where go.mod file resides
+                # Exclude the rules while running gosec
                 excludeRules: G204,G301
+                # Exclude the directories while running gosec
+                excludeDir: "\.*test\.*"
           onComplete:
             - echo "Step done!"
