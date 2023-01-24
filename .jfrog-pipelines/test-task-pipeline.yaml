@@ -55,7 +55,7 @@ pipelines:
 
             # Run task
             - task: $res_task_go_sec_resourcePath
-              id: go_sec
+              id: run_go_sec
             - echo "Resource Path"
             - echo $res_task_go_sec_resourcePath
           onComplete:
