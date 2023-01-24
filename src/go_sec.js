@@ -23,17 +23,17 @@ async function go_sec() {
 }
 
 async function run_gosec(goPathBin) {
-  let sourcePath = tasks.getInput("sourceFilePath");
+  let sourcePath = tasks.getInput("sourcePath");
   if (sourcePath == "") {
-    tasks.warning(`Please provide go source path for Static Check Analysis`);
+    tasks.warning(`Please provide go source path for gosec to run`);
+  } else {
+    const {stdOut, stdErr} = ((await tasks.execute(`cd ${sourcePath}`)));
+    tasks.info(`These errors were reported by the command but they did NOT cause the command to fail: [${stdErr}]`)
+    tasks.info(`The command to completed with stdOut: [${stdOut}]]`);
+    const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec ./...`)));
+    tasks.info(`These errors were reported by the command while executing gosec check but they did NOT cause the command to fail: [${stdErrStaticCheck}]`)
+    tasks.info(`The command static check analysis completed with stdOut: [${stdOutStaticCheck}]]`);
   }
-  const {stdOut, stdErr} = ((await tasks.execute(`cd ${sourcePath}`)));
-  tasks.info(`These errors were reported by the command but they did NOT cause the command to fail: [${stdErr}]`)
-  tasks.info(`The command to completed with stdOut: [${stdOut}]]`);
-  tasks.info("Gosec installed successfully")
-  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec ./...`)));
-  tasks.info(`These errors were reported by the command while executing gosec check but they did NOT cause the command to fail: [${stdErrStaticCheck}]`)
-  tasks.info(`The command static check analysis completed with stdOut: [${stdOutStaticCheck}]]`);
 
 }
 
