@@ -7,10 +7,10 @@ labels:
   - sdk
 input:
   - name: goVersion
-     description: Golang version to be installed
+    description: Golang version to be installed
   - name: cacheIntegration
-     description: Artifactory integration to be used to cache the Golang installer. If not provided, the first Artifactory integration available to the step will be used.
+    description: Artifactory integration to be used to cache the Golang installer. If not provided, the first Artifactory integration available to the step will be used.
   - name: staticCheckVersion
-     description: Static check version to be used to download from the MIT license.If not provoded,it will use the latest version
+    description: Static check version to be used to download from the MIT license.If not provoded,it will use the latest version
 execution:
   - node16 dist/index.js
