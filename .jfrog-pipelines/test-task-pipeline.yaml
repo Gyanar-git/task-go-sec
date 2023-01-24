@@ -30,7 +30,7 @@ pipelines:
         type: Bash
         configuration:
           inputResources:
-            - name: gosec_task_gitrepo
+            - name: go_sec_task
           integrations:
             - name: {{ .Values.artIntegration }}
         execution:
