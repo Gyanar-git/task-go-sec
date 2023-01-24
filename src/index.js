@@ -1,7 +1,7 @@
-const go_sec = require("./go_sec");
+const gosecApp = require("./go_sec");
 
 function main() {
-  go_sec();
+  gosecApp.go_sec();
 }
 
 main();
