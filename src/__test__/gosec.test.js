@@ -9,12 +9,14 @@ describe('test go sec', () => {
       .mockImplementation(() => {
         return {}
       })
-    const warningSpy = jest.spyOn(tasks, 'warning');
+    const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
+    const errorSpy = jest.spyOn(tasks, 'error');
     await goStaticCheckApp.goSec();
-    expect(warningSpy).toHaveBeenCalledWith("Not able to find Go which is mandatory for gosec.Hence couldn’t perform static check analysis, please use setup-go task")
+    expect(mockExit).toHaveBeenCalled()
+    expect(errorSpy).toHaveBeenCalled()
   })
 
-  it('Run Static code analysis for go code', async () => {
+  it('Run Go Sec code analysis for go code', async () => {
     const mockExec = jest.spyOn(tasks, "execute").mockReturnValueOnce({stdOut:"/Users/test/go"});
     const mockExecGosecInstall = jest.spyOn(tasks, "execute").mockReturnValueOnce({stdOut:"path"});
     const mockExecGosec = jest.spyOn(tasks, "execute").mockReturnValue({stdOut:"/Users/go/bin/gosec"});

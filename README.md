@@ -7,4 +7,5 @@ This Pipelines Task is for Running Go Sec
   id: go_sec
   input:
    sourcePath:
+   excludeRules:
 ```

@@ -60,7 +60,5 @@ pipelines:
                 sourcePath: "/"
                 # Exclude the rules while running gosec
                 excludeRules: G204,G301
-                # Exclude the directories while running gosec
-                excludeDir: "\.*test\.*"
           onComplete:
             - echo "Step done!"
