@@ -9,6 +9,6 @@ input:
   - name: sourcePath
     description: Path to the go source code where go.mod file resides.If not provided,it will use the current working directory
   - name: excludeRules
-      description: Rules which will be excluded while running Go Sec
+    description: Rules which will be excluded while running Go Sec
 execution:
   - node16 dist/index.js
