@@ -57,7 +57,7 @@ pipelines:
               id: go_sec_run_1
               input:
                 # Source code path where go.mod file resides
-                sourcePath: "/"
+                sourcePath: src/service
                 # Exclude the rules while running gosec
                 excludeRules: G204,G301
           onComplete:
