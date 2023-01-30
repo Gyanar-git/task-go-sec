@@ -68,12 +68,12 @@ async function installGoSec(goPath) {
   tasks.info("goPathBin: " +goPathBin);
   //tasks.execute(`cd ${goPathBin} `)
   tasks.execute(`ls -lrt `)
-  //const {goSecInstallStdOut,stdErr} = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)));
-  const {goSecInstallStdOut,stdErr} = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin`)));
-  if (goSecInstallStdOut) {
+  const stdout = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)).stdOut);
+  //const {goSecInstallStdOut,stdErr} = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b $(go env GOPATH)/bin`)));
+  if (stdout) {
     tasks.info("Installed go sec");
   } else {
-    tasks.error(`Unable to install go sec with error: [${stdErr}]`);
+    //tasks.error(`Unable to install go sec with error: [${stdErr}]`);
     return process.exit(1);
   }
   return {goPathBin, goSecInstallStdOut};
