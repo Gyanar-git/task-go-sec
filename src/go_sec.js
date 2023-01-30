@@ -70,7 +70,7 @@ async function installGoSec(goPath) {
   tasks.appendToPath(goPathBin);
   tasks.info("goPathBin: " + goPathBin);
   //tasks.execute(`cd ${goPathBin} `)
-  const {stdOut,stdErr} = (await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -C -b ${goPathBin}`));
+  const {stdOut,stdErr} = (await tasks.execute(`rm -f ${goPathBin}/gosec && curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -C -b ${goPathBin}`));
   //tasks.execute(`ls -lrt `)
   const err = JSON.stringify(stdErr);
   if (stdErr) {
