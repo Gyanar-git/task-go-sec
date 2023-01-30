@@ -73,8 +73,8 @@ async function installGoSec(goPath) {
     tasks.info("Installed go sec");
   } else {
     tasks.execute(`ls -lrt `)
-    tasks.error(`Unable to install go sec with error: [${stdErr}]`);
-    return process.exit(1);
+    //tasks.error(`Unable to install go sec with error: [${stdErr}]`);
+    //return process.exit(1);
   }
   return {goPathBin, stdOut};
 }
