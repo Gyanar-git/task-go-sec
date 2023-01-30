@@ -9,7 +9,7 @@ async function goSec() {
     const goPathStdout = (await tasks.execute("go env GOPATH")).stdOut;
     if (goPathStdout) {
       const {goPathBin, goSecInstall} = await installGoSec(goPathStdout);
-      tasks.info(`Go installed without any error: [${goSecInstall}]`);
+      //tasks.info(`Go installed without any error: [${goSecInstall}]`);
       const {stdOut, stdErr} = (await tasks.execute(`${goPathBin}/gosec -version`));
       if (stdOut) {
         tasks.info(`Checking the gosec version: [${stdOut}]`);
@@ -73,6 +73,7 @@ async function installGoSec(goPath) {
     tasks.info("Installed go sec");
   } else {
     tasks.error(`Unable to install go sec with error: [${goSecInstallStdErr}]`);
+    return process.exit(1);
   }
   return {goPathBin, goSecInstallStdOut};
 }
