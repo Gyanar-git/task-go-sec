@@ -50,7 +50,7 @@ async function runGoSec(goPathBin) {
     tasks.error(`Unable to switch to the source repo for running go sec with error: [${stdErr}]`);
     return process.exit(1);
   }
-  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} ./...`)));
+  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} -tests -exclude-dir=\\.*test\\.* ./...`)));
   if (stdOutStaticCheck) {
     tasks.info(`Ran go sec with output: [${stdOutStaticCheck}]]`);
   } else {
