@@ -59,6 +59,6 @@ pipelines:
                 # Source code path where go.mod file resides
                 sourcePath:
                 # Exclude the rules while running gosec
-                excludeRules:
+                excludeRules: G
           onComplete:
             - echo "Step done!"

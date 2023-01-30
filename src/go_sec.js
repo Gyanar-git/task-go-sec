@@ -43,13 +43,15 @@ async function runGoSec(goPathBin) {
   let excludeRules = tasks.getInput("excludeRules");
   tasks.info("Excluded rules:-" +excludeRules);
   let resolvedPath = resolveSourcePath(sourcePath);
-  const {stdOut, stdErr} = ((await tasks.execute(`cd ${resolvedPath}`)));
-  if (stdOut) {
-    tasks.info(`Switching to the source repo for running go sec: [${stdOut}]]`);
-  } else {
+  const  stdErr = ((await tasks.execute(`cd ${resolvedPath}`)));
+  if (stdErr) {
     tasks.error(`Unable to switch to the source repo for running go sec with error: [${stdErr}]`);
     return process.exit(1);
+  } else {
+    tasks.info(`Switching to the source repo for running go sec`);
   }
+  tasks.info("Checking if the gosec binary present")
+  tasks.execute(`ls -lrt`)
   const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} -tests -exclude-dir=\\.*test\\.* ./...`)));
   if (stdOutStaticCheck) {
     tasks.info(`Ran go sec with output: [${stdOutStaticCheck}]]`);
@@ -60,14 +62,16 @@ async function runGoSec(goPathBin) {
 }
 
 async function installGoSec(goPath) {
-  tasks.info("Go is installed hence installing go sec");
+  tasks.info("Go is installed hence installing go sec" +goPath);
   const goPathBin = path.join(goPath, "bin");
   tasks.appendToPath(goPathBin);
-  const {goSecInstallStdOut} = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)).stdOut);
+  tasks.info("goPathBin: " +goPathBin);
+  tasks.execute()
+  const {goSecInstallStdOut,goSecInstallStdErr} = ((await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`)));
   if (goSecInstallStdOut) {
     tasks.info("Installed go sec");
   } else {
-    tasks.error(`Unable to install go sec with error:`);
+    tasks.error(`Unable to install go sec with error: [${goSecInstallStdErr}]`);
   }
   return {goPathBin, goSecInstallStdOut};
 }
