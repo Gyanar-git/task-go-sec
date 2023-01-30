@@ -2,7 +2,7 @@ const tasks = require("jfrog-pipelines-tasks");
 const path = require("path");
 
 
-module.exports = { goSec } ;
+module.exports = {goSec};
 
 async function goSec() {
   try {
@@ -41,7 +41,7 @@ function resolveSourcePath(sourcePath) {
 async function runGoSec(goPathBin) {
   let sourcePath = tasks.getInput("sourcePath");
   let excludeRules = tasks.getInput("excludeRules");
-  tasks.info("Excluded rules:-" +excludeRules);
+  tasks.info("Excluded rules:-" + excludeRules);
   let resolvedPath = resolveSourcePath(sourcePath);
   const stdErr = ((await tasks.execute(`cd ${resolvedPath}`)));
   if (stdErr) {
@@ -52,7 +52,10 @@ async function runGoSec(goPathBin) {
   }
   tasks.info("Checking if the gosec binary present")
   tasks.execute(`ls -lrt`)
-  const {stdOutStaticCheck, stdErrStaticCheck} = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} -tests -exclude-dir=\\.*test\\.* ./...`)));
+  const {
+    stdOutStaticCheck,
+    stdErrStaticCheck
+  } = ((await tasks.execute(`${goPathBin}/gosec -exclude=${excludeRules} -tests -exclude-dir=\\.*test\\.* ./...`)));
   if (stdOutStaticCheck) {
     tasks.info(`Ran go sec with output: [${stdOutStaticCheck}]]`);
   } else {
@@ -62,15 +65,16 @@ async function runGoSec(goPathBin) {
 }
 
 async function installGoSec(goPath) {
-  tasks.info("Go is installed hence installing go sec" +goPath);
+  tasks.info("Go is installed hence installing go sec" + goPath);
   const goPathBin = path.join(goPath, "bin");
   tasks.appendToPath(goPathBin);
-  tasks.info("goPathBin: " +goPathBin);
+  tasks.info("goPathBin: " + goPathBin);
   //tasks.execute(`cd ${goPathBin} `)
-  const stdErr = (await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`));
+  const {stdOut,stdErr} = (await tasks.execute(`curl -sfL https://raw.githubusercontent.com/securego/gosec/master/install.sh | sh -s -- -b ${goPathBin}`));
   //tasks.execute(`ls -lrt `)
+  const err = JSON.stringify(stdErr);
   if (stdErr) {
-    tasks.error(`Unable to install go sec with error: [${stdErr}]`);
+    tasks.error(`Unable to install go sec with error` +err);
   } else {
     tasks.info("Installed go sec");
     //tasks.execute(`ls -lrt `)
