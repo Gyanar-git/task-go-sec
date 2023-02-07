@@ -71,7 +71,7 @@ function getOptions() {
   }
 
   let commandArgs = tasks.getInput("commandArgs");
-  if (commandArgs !== null && commandArgs) {
+  if (commandArgs !== '' && commandArgs) {
     options += commandArgs + '';
   }
 
