@@ -39,7 +39,7 @@ function resolveSourcePath() {
   const resourceName = tasks.getInput('resourceName');
   const sourcePath = tasks.getInput('sourcePath');
   if (resourceName === '') {
-    throw new Error('One of mandatory input[resourceName] is missing. Please verify Static Check task inputs.');
+    throw new Error('One of mandatory input[resourceName] is missing. Please verify Static Security Check task inputs.');
   }
   const resource = tasks.getResource(resourceName)
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
