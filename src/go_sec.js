@@ -46,7 +46,7 @@ function resolveSourcePath() {
   tasks.info("Resurce path:" +resource.resourcePath)
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
   tasks.info("opppppp:" +op)
-  if(sourcePath === ''){
+  if(!sourcePath){
     return resource.resourcePath ;
   } else {
     return path.resolve(resource.resourcePath, sourcePath);
