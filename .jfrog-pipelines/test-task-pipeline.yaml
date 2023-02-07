@@ -57,7 +57,7 @@ pipelines:
               id: go_sec
               input:
                 # resourceName of the task
-                resourceName: "staticcheck_task_gitrepo"
+                resourceName: "gosec_task_gitrepo"
                 # Source code path where go.mod file resides
                 sourcePath:
                 # Comma separated list of rules IDs to exclude
