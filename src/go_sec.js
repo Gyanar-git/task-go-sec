@@ -81,7 +81,7 @@ function getOptions() {
   if (excludeRules) {
     options.push('--fmt ' + outputFormat)
   }
-
+  tasks.info("Options" +options)
   return {options};
 }
 
@@ -95,7 +95,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
   tasks.info("Respolved path:" +resolvedPath)
   const {
     stdOut: stdOutGoSec, stdErr: stdErrGoSec
-  } = options ? ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options}./...`))) : ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`)));
+  } = options ? ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`))) : ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`)));
   if (stdOutGoSec) {
     tasks.info(`Ran go sec with output: [${stdOutGoSec}]]`);
   } else {
