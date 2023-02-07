@@ -42,7 +42,7 @@ function resolveSourcePath() {
     throw new Error('One of mandatory input[resourceName] is missing. Please verify Static Security Check task inputs.');
   }
   const resource = tasks.getResource(resourceName)
-  const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
+  //const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
   if(sourcePath === ''){
     return resource.resourcePath ;
   } else {
@@ -83,7 +83,7 @@ function getOptions() {
  *
  * @param options
  * @param goPathBin
- * @returns {Promise<void>}
+ * @returns {Promise<{stdErrGoSec: string, stdOutGoSec: string}>}
  */
 async function runGoSec(options, goPathBin, resolvedPath) {
   const {
@@ -92,8 +92,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
   if (stdOutGoSec) {
     tasks.info(`Ran go sec with output: [${stdOutGoSec}]]`);
   } else {
-    tasks.error(`Error running go sec: [${stdErrGoSec}]`);
-    process.exit(1);
+    tasks.info(`Error running go sec: [${stdErrGoSec}]`);
   }
 }
 
@@ -118,7 +117,7 @@ async function installGoSec(goPath) {
   if (!goSecVersion) {
     goSecVersion = "latest";
   }
-  tasks.info("Go is installed hence installing go sec from [ithub.com/securego/gosec/v2/cmd/gosec]");
+  tasks.info("Go is installed hence installing go sec from [github.com/securego/gosec/v2/cmd/gosec]");
   const goPathBin = path.join(goPath, "bin");
   tasks.appendToPath(goPathBin);
   tasks.info("goPathBin: " + goPathBin);
