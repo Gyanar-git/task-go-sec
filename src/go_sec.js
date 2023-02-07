@@ -58,10 +58,10 @@ function resolveSourcePath() {
 
 /**
  * Get the supported options
- * @returns {{options: string}}
+ * @returns {string}
  */
 function getOptions() {
-  let options = '';
+  let options = [];
   let includeRules = tasks.getInput("includeRules");
   if (includeRules !== null && includeRules) {
     options.push('-include ' + includeRules)
@@ -81,8 +81,8 @@ function getOptions() {
   if (excludeRules != null && excludeRules) {
     options.push('--fmt ' + outputFormat)
   }
-  tasks.info("Options" +options)
-  return {options};
+  tasks.info("Options:" +options.toString())
+  return options.toString();
 }
 
 /**
