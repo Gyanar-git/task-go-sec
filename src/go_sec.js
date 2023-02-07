@@ -47,12 +47,10 @@ function resolveSourcePath() {
   tasks.info("Resurce path:" +resource.resourcePath)
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
   tasks.info("opppppp:" +op)
-  if(sourcePath){
-    tasks.info("Source is defined:" +sourcePath)
-    return path.resolve(resource.resourcePath, sourcePath);
-  } else {
-    tasks.info("Source not defined:" +sourcePath)
+  if(sourcePath === ''){
     return resource.resourcePath ;
+  } else {
+    return path.resolve(resource.resourcePath, sourcePath);
   }
 }
 
@@ -61,28 +59,28 @@ function resolveSourcePath() {
  * @returns {string}
  */
 function getOptions() {
-  let options = [];
+  let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules !== null && includeRules) {
-    options.push('-include ' + includeRules)
+    options += '-include ' + includeRules ;
   }
 
   let excludeRules = tasks.getInput("excludeRules")
   if (excludeRules !== null && excludeRules ) {
-    options.push('-exclude ' + excludeRules)
+    options += '-exclude ' + excludeRules ;
   }
 
   let commandArgs = tasks.getInput("commandArgs");
   if (commandArgs !== null && commandArgs) {
-    options.push(commandArgs)
+    options += commandArgs ;
   }
 
   let outputFormat = tasks.getInput("outputFormat");
   if (excludeRules != null && excludeRules) {
-    options.push('--fmt ' + outputFormat)
+    options += '--fmt ' + outputFormat ;
   }
-  tasks.info("Options:" +options.toString())
-  return options.toString();
+  tasks.info("Options:" +options)
+  return options;
 }
 
 /**
