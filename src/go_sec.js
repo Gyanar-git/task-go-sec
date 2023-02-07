@@ -62,17 +62,17 @@ function getOptions() {
   let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules !== '' && includeRules) {
-    options += '-include ' + includeRules + '';
+    options += '-include ' + includeRules + ' ';
   }
 
   let excludeRules = tasks.getInput("excludeRules")
   if (excludeRules !== '' && excludeRules) {
-    options += '-exclude ' + excludeRules + '';
+    options += '-exclude ' + excludeRules + ' ';
   }
 
   let commandArgs = tasks.getInput("commandArgs");
   if (commandArgs !== '' && commandArgs) {
-    options += commandArgs + '';
+    options += commandArgs + ' ';
   }
 
   let outputFormat = tasks.getInput("outputFormat");
