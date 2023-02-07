@@ -55,7 +55,7 @@ pipelines:
               input:
                 path: $res_securitycheck_publish_gitrepo_resourcePath
                 targetRepository: $TASK_REPOSITORY
-                taskName: testtask
+                taskName: $TASK_NAME
                 taskVersion: 0.0.2
                 includePattern: ^README.md$|^dist
 
@@ -90,7 +90,7 @@ pipelines:
                 sourcePath: src/service
                 # To disable checks,please add the rules prefix with minus(-) sign
                 checks: [ "all", "-ST1000" ]
-                # Output format to use. This corresponds to gosec's -f flag. Usually you will want to use the default("text")
+                # Output format to use. This corresponds to gosec's -fmt flag. Usually you will want to use the default("text")
                 outputFormat: text
           onComplete:
             - echo "gosec Test done!"

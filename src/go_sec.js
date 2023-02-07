@@ -16,7 +16,7 @@ async function goSec() {
       const {stdOut: goSecVersionStdOut, stdErr: goSecVersionStErr} = (await tasks.execute(`${goPathBin}/gosec -version`));
       if (goSecVersionStdOut) {
         tasks.info(`Checking the Go Sec version: [${goSecVersionStdOut.toString()}]`);
-        await resolveSourceDir(goPathBin);
+        await resolveDirAndRunScan(goPathBin);
       } else {
         tasks.error(`Command for checking the Go Sec version failed with error: [${goSecVersionStErr}]`);
         process.exit(1)
@@ -43,7 +43,6 @@ function resolveSourcePath() {
   }
   const resource = tasks.getResource(resourceName)
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
-  tasks.info("opppppp:" +op)
   if(sourcePath === ''){
     return resource.resourcePath ;
   } else {
@@ -103,7 +102,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
  * @param goPathBin - path where got is installed
  * @returns {Promise<never>}
  */
-async function resolveSourceDir(goPathBin) {
+async function resolveDirAndRunScan(goPathBin) {
   let options = getOptions();
   let resolvedPath = resolveSourcePath();
   await runGoSec(options, goPathBin,resolvedPath);
