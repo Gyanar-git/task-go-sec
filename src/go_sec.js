@@ -47,12 +47,12 @@ function resolveSourcePath() {
   tasks.info("Resurce path:" +resource.resourcePath)
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
   tasks.info("opppppp:" +op)
-  if(!sourcePath){
-    tasks.info("Source not defined:" +sourcePath)
-    return resource.resourcePath ;
-  } else {
+  if(sourcePath){
     tasks.info("Source is defined:" +sourcePath)
     return path.resolve(resource.resourcePath, sourcePath);
+  } else {
+    tasks.info("Source not defined:" +sourcePath)
+    return resource.resourcePath ;
   }
 }
 
