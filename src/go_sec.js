@@ -58,10 +58,10 @@ function resolveSourcePath() {
 
 /**
  * Get the supported options
- * @returns {{options: *[]}}
+ * @returns {{options: string}}
  */
 function getOptions() {
-  let options = [];
+  let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules !== null && includeRules) {
     options.push('-include ' + includeRules)
