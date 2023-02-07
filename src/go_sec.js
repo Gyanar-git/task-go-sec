@@ -75,7 +75,6 @@ function getOptions() {
   if (excludeRules) {
     options += '--fmt ' + outputFormat;
   }
-  tasks.info("Options:" + options)
   return options;
 }
 
