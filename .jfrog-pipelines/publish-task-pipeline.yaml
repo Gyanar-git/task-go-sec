@@ -56,7 +56,7 @@ pipelines:
                 path: $res_securitycheck_publish_gitrepo_resourcePath
                 targetRepository: $TASK_REPOSITORY
                 taskName: $TASK_NAME
-                taskVersion: 0.0.2
+                taskVersion: 0.0.1
                 includePattern: ^README.md$|^dist
 
       - name: test_published_task
