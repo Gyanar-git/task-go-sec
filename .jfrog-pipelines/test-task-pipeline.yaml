@@ -58,8 +58,6 @@ pipelines:
               input:
                 # resourceName of the task
                 resourceName: "gosec_task_gitrepo"
-                # Source code path where go.mod file resides
-                sourcePath:
                 # Comma separated list of rules IDs to exclude
                 excludeRules:
                 # Comma separated list of rules IDs to include
