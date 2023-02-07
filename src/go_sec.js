@@ -61,22 +61,22 @@ function resolveSourcePath() {
 function getOptions() {
   let options = '';
   let includeRules = tasks.getInput("includeRules");
-  if (includeRules !== null && includeRules) {
-    options += '-include ' + includeRules ;
+  if (includeRules !== '' && includeRules) {
+    options += '-include ' + includeRules + '' ;
   }
 
   let excludeRules = tasks.getInput("excludeRules")
-  if (excludeRules !== null && excludeRules ) {
-    options += '-exclude ' + excludeRules ;
+  if (excludeRules !== '' && excludeRules ) {
+    options += '-exclude ' + excludeRules + '';
   }
 
   let commandArgs = tasks.getInput("commandArgs");
   if (commandArgs !== null && commandArgs) {
-    options += commandArgs ;
+    options += commandArgs + '';
   }
 
   let outputFormat = tasks.getInput("outputFormat");
-  if (excludeRules != null && excludeRules) {
+  if (excludeRules !== '' && excludeRules) {
     options += '--fmt ' + outputFormat ;
   }
   tasks.info("Options:" +options)
