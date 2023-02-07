@@ -12,7 +12,7 @@ resources:
       cloneProtocol: https
 
 pipelines:
-  - name: run_go_sec
+  - name: run_go_security_check
     configuration:
       jfrogCliVersion: 2
       runtime:
@@ -54,11 +54,19 @@ pipelines:
 
             # Run task
             - task: $res_gosec_task_gitrepo_resourcePath
-              id: go_sec_run_1
+              id: go_sec
               input:
+                # resourceName of the task
+                resourceName: "staticcheck_task_gitrepo"
                 # Source code path where go.mod file resides
-                sourcePath: src/service
-                # Exclude the rules while running gosec
-                excludeRules: G
+                sourcePath:
+                # Comma separated list of rules IDs to exclude
+                excludeRules:
+                # Comma separated list of rules IDs to include
+                includeRules:
+                # Provide the command argument options here
+                commandArgs: --tests -exclude-dir=\.*test\.*
+                # Set output format. Valid options are: json, yaml, csv, junit-xml, html, sonarqube, golint, sarif or text (default "text")
+                outputFormat: text
           onComplete:
             - echo "Step done!"

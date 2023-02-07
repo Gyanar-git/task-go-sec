@@ -3,7 +3,7 @@ import * as tasks from "jfrog-pipelines-tasks";
 
 function main() {
   staticTest.goSec().then(() => {
-    tasks.info("Finished go-sec");
+    tasks.info("Finished go-security-check");
   });
 }
 

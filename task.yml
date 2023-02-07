@@ -1,14 +1,24 @@
-name: go-sec
-description: Task for Go Sec
-source: github.com/Gyanar-git/task-go-sec
+name: go-security-check
+description: Task for Go Security Check
+source: github.com/Gyanar-git/task-go-security-check
 labels:
-  - staticcheck
+  - securitycheck
   - node
   - sdk
 input:
+  - name: goSecVersion
+    description: Go Security check version to be used to download from the MIT license.If not provided,it will use the latest version
+  - name: resourceName
+    description: resource name which should scanned by Go Sec
   - name: sourcePath
     description: Path to the go source code where go.mod file resides.If not provided,it will use the current working directory
   - name: excludeRules
     description: Rules which will be excluded while running Go Sec
+  - name: includeRules
+    description: Rules which will be included while running Go Sec
+  - name: commandArgs
+    description: Provide the command argument options here (--tests -exclude-dir=\.*test\.*)
+  - name: outputFormat
+    description: Set output format(json, yaml, csv, junit-xml, html, sonarqube, golint, sarif or text (default "text")
 execution:
   - node16 dist/index.js

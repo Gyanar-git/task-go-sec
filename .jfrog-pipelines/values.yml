@@ -1,5 +1,6 @@
-repoPath: Gyanar-git/task-go-sec
+repoPath: Gyanar-git/task-go-security-check
 mainBranch: main
 gitIntegration: int_github_gyana
 artIntegration: artifactory
 goVersion: 1.19.5
+goSecVesrion: latest
