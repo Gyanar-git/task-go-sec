@@ -1,4 +1,4 @@
-repoPath: Gyanar-git/task-go-security-check
+repoPath: Gyanar-git/task-go-sec
 mainBranch: main
 gitIntegration: int_github_gyana
 artIntegration: int_default_artifactory
