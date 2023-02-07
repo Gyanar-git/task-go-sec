@@ -82,7 +82,7 @@ pipelines:
             - popd
             # Run task
             - task: $res_securitycheck_publish_gitrepo_resourcePath
-              id: static_check
+              id: security_check
               input:
                 # resourceName of the task
                 resourceName: "securitycheck_publish_gitrepo"

@@ -38,13 +38,10 @@ async function goSec() {
 function resolveSourcePath() {
   const resourceName = tasks.getInput('resourceName');
   const sourcePath = tasks.getInput('sourcePath');
-  tasks.info("sourcePath:" +sourcePath)
   if (resourceName === '') {
     throw new Error('One of mandatory input[resourceName] is missing. Please verify Static Check task inputs.');
   }
   const resource = tasks.getResource(resourceName)
-  tasks.info("Resurce name:" +resource)
-  tasks.info("Resurce path:" +resource.resourcePath)
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
   tasks.info("opppppp:" +op)
   if(sourcePath === ''){
@@ -90,7 +87,6 @@ function getOptions() {
  * @returns {Promise<void>}
  */
 async function runGoSec(options, goPathBin, resolvedPath) {
-  tasks.info("Respolved path:" +resolvedPath)
   const {
     stdOut: stdOutGoSec, stdErr: stdErrGoSec
   } = options ? ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`))) : ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`)));
