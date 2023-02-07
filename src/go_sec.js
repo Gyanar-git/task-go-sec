@@ -86,11 +86,15 @@ function getOptions() {
  * @returns {Promise<{stdErrGoSec: string, stdOutGoSec: string}>}
  */
 async function runGoSec(options, goPathBin, resolvedPath) {
-  const commandOutput  = options ? (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`));
-  if (commandOutput.stdErr) {
-    tasks.info(`Ran go sec with output: [${commandOutput.stdErr}]]`);
-  } else {
-    tasks.info(`Error running go sec: [${commandOutput.stdOut}]`);
+  try {
+    const commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`));
+    if (commandOutput.stdErr) {
+      tasks.info(`Ran go sec with output: [${commandOutput.stdErr}]]`);
+    } else {
+      tasks.info(`Error running go sec: [${commandOutput.stdOut}]`);
+    }
+  } catch (e) {
+    tasks.info(e)
   }
 }
 
