@@ -38,6 +38,7 @@ async function goSec() {
 function resolveSourcePath() {
   const resourceName = tasks.getInput('resourceName');
   const sourcePath = tasks.getInput('sourcePath');
+  tasks.info("sourcePath:" +sourcePath)
   if (resourceName === '') {
     throw new Error('One of mandatory input[resourceName] is missing. Please verify Static Check task inputs.');
   }
@@ -47,8 +48,10 @@ function resolveSourcePath() {
   const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
   tasks.info("opppppp:" +op)
   if(!sourcePath){
+    tasks.info("Source not defined:" +sourcePath)
     return resource.resourcePath ;
   } else {
+    tasks.info("Source is defined:" +sourcePath)
     return path.resolve(resource.resourcePath, sourcePath);
   }
 }
@@ -89,6 +92,7 @@ function getOptions() {
  * @returns {Promise<void>}
  */
 async function runGoSec(options, goPathBin, resolvedPath) {
+  tasks.info("Respolved path:" +resolvedPath)
   const {
     stdOut: stdOutGoSec, stdErr: stdErrGoSec
   } = options ? ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options}./...`))) : ((await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`)));

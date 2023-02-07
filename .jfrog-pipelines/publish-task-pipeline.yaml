@@ -1,0 +1,96 @@
+template: true
+valuesFilePath: ./values.yml
+
+resources:
+  - name: securitycheck_publish_gitrepo
+    type: GitRepo
+    configuration:
+      path: {{ .Values.repoPath }}
+      gitProvider: {{ .Values.gitIntegration }}
+      branches:
+        include: ^{{ .Values.mainBranch }}$
+      cloneProtocol: https
+
+pipelines:
+  - name: securitycheck_publish
+    configuration:
+      jfrogCliVersion: 2
+      runtime:
+        type: image
+        image:
+          custom:
+            name: releases-docker.jfrog.io/jfrog/pipelines-u18node
+            tag: "16"
+            autoPull: true
+      environmentVariables:
+        readOnly:
+          TASK_NAME: gosec
+          TASK_VERSION: 0.0.1
+          TASK_REPOSITORY: pipelines-tasks-local
+          RESOLVE_REPO: npm-virtual
+    steps:
+      - name: build_and_publish_task
+        type: Bash
+        configuration:
+          inputResources:
+            - name: securitycheck_publish_gitrepo
+          integrations:
+            - name: {{ .Values.artIntegration }}
+        execution:
+          onExecute:
+            # Make sure version was provided
+            - test -n "$TASK_VERSION" -a "$TASK_VERSION" != "0.0.0"
+            - pushd $res_securitycheck_publish_gitrepo_resourcePath
+            # Configure JFrog CLI
+            - jfrog npmc --repo-resolve $RESOLVE_REPO
+            # Install npm dependencies
+            - jfrog npm install
+            # Build task runnable script bundled with dependencies
+            - npm run dist
+            - popd
+
+            # Run publish task
+            - task: jfrog/publish-task@v0.0.2
+              id: publish-gosec
+              input:
+                path: $res_securitycheck_publish_gitrepo_resourcePath
+                targetRepository: $TASK_REPOSITORY
+                taskName: testtask
+                taskVersion: 0.0.2
+                includePattern: ^README.md$|^dist
+
+      - name: test_published_task
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: build_and_publish_task
+          inputResources:
+            - name: securitycheck_publish_gitrepo
+          integrations:
+            - name: {{ .Values.artIntegration }}
+        execution:
+          onExecute:
+            - pushd $res_securitycheck_publish_gitrepo_resourcePath
+            # Configure JFrog CLI
+            - jf npmc --repo-resolve $RESOLVE_REPO
+            # Install npm dependencies
+            - jf npm install
+            # Build task runnable script bundled with dependencies
+            - npm run dist
+            # create test coverage report
+            - npx jest --coverage
+            - popd
+            # Run task
+            - task: $res_securitycheck_publish_gitrepo_resourcePath
+              id: static_check
+              input:
+                # resourceName of the task
+                resourceName: "securitycheck_publish_gitrepo"
+                # Relative Source code path where go.mod file resides
+                sourcePath: src/service
+                # To disable checks,please add the rules prefix with minus(-) sign
+                checks: [ "all", "-ST1000" ]
+                # Output format to use. This corresponds to gosec's -f flag. Usually you will want to use the default("text")
+                outputFormat: text
+          onComplete:
+            - echo "gosec Test done!"
