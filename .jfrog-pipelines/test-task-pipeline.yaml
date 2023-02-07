@@ -65,7 +65,7 @@ pipelines:
                 # Comma separated list of rules IDs to include
                 includeRules:
                 # Provide the command argument options here
-                commandArgs: --tests -exclude-dir=\.*test\.*
+                commandArgs: --tests -exclude-dir=tests
                 # Set output format. Valid options are: json, yaml, csv, junit-xml, html, sonarqube, golint, sarif or text (default "text")
                 outputFormat: text
           onComplete:
