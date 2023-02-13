@@ -62,12 +62,12 @@ function getOptions() {
   let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules) {
-    options += '-include= ' + includeRules + ' ';
+    options += '-include=' + includeRules + ' ';
   }
 
   let excludeRules = tasks.getInput("excludeRules")
   if (excludeRules) {
-    options += '-exclude= ' + excludeRules + ' ';
+    options += '-exclude=' + excludeRules + ' ';
   }
 
   let commandArgs = tasks.getInput("commandArgs");
@@ -76,7 +76,7 @@ function getOptions() {
   }
 
   let outputFormat = tasks.getInput("outputFormat");
-  if (excludeRules) {
+  if (outputFormat) {
     options += '--fmt ' + outputFormat;
   }
   return options;
@@ -128,15 +128,9 @@ async function installGoSec(goPath) {
   tasks.appendToPath(goPathBin);
   tasks.info("goPathBin: " + goPathBin);
   try {
-    let command;
-    if(isWindows()){
-       command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 1>$null`;
-    } else {
-      command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 2>/dev/null`
-    }
     const {
       stdOut: stdOutInstall, stdErr: stdErrInstall
-    } = (await tasks.execute(`${command}`));
+    } = (await tasks.execute(`go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 2>/dev/null`));
     if (stdErrInstall) {
       tasks.error(`Failed to install Go Sec with error:[${stdErrInstall}] `);
     } else {
@@ -146,14 +140,6 @@ async function installGoSec(goPath) {
     logErrorAndExit(e)
   }
   return {goPathBin};
-}
-
-/**
- * Returns true OS family is WINDOWS otherwise false
- * @return {boolean}
- */
-function isWindows() {
-  return tasks.getOperatingSystemFamily().toLowerCase().startsWith('windows', 0);
 }
 
 /**
