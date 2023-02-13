@@ -128,9 +128,15 @@ async function installGoSec(goPath) {
   tasks.appendToPath(goPathBin);
   tasks.info("goPathBin: " + goPathBin);
   try {
+    let command;
+    if(isWindows()){
+      command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 1>$null`;
+    }else{
+      command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 2>/dev/null`;
+    }
     const {
       stdOut: stdOutInstall, stdErr: stdErrInstall
-    } = (await tasks.execute(`go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 2>/dev/null`));
+    } = (await tasks.execute(`${command}`));
     if (stdErrInstall) {
       tasks.error(`Failed to install Go Sec with error:[${stdErrInstall}] `);
     } else {
@@ -140,6 +146,14 @@ async function installGoSec(goPath) {
     logErrorAndExit(e)
   }
   return {goPathBin};
+}
+
+/**
+ * Returns true OS family is WINDOWS otherwise false
+ * @return {boolean}
+ */
+function isWindows() {
+  return tasks.getOperatingSystemFamily().toLowerCase().startsWith('windows', 0);
 }
 
 /**
