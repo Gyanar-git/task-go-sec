@@ -62,12 +62,12 @@ function getOptions() {
   let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules) {
-    options += '-include=' + includeRules + ' ';
+    options += isWindows() ? ('-include= ' + includeRules + ' ') : ('-include=' + includeRules + ' ');
   }
 
   let excludeRules = tasks.getInput("excludeRules")
   if (excludeRules) {
-    options += '-exclude=' + excludeRules + ' ';
+    options += isWindows() ? ('-exclude= ' + excludeRules + ' ') : ('-exclude=' + excludeRules + ' ');
   }
 
   let commandArgs = tasks.getInput("commandArgs");
