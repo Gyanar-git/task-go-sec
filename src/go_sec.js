@@ -130,7 +130,7 @@ async function installGoSec(goPath) {
   try {
     let command;
     if(isWindows()){
-       command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 1>$null `;
+       command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 1>$null`;
     } else {
       command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 2>/dev/null`
     }
