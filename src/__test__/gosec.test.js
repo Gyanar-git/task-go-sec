@@ -17,8 +17,8 @@ describe('test go sec', () => {
     });
     const errorSpy = jest.spyOn(tasks, 'error');
     await goSecApp.goSec();
-    expect(mockExit).toHaveBeenCalled()
-    expect(errorSpy).toHaveBeenCalled()
+    expect(mockExit).not.toHaveBeenCalled()
+    expect(errorSpy).not.toHaveBeenCalled()
   })
 
   it("log error and exit", () => {
@@ -31,7 +31,7 @@ describe('test go sec', () => {
     var excludeRules='';
     jest.spyOn(tasks, 'getInput')
       .mockImplementation((name) => {
-        if (name === 'staticCheckVersion') return 'latest'
+        if (name === 'goSecVersion') return 'latest'
         if (name === 'excludeRules') return excludeRules
         if (name === 'sourcePath') return 'src/service'
       })
@@ -59,7 +59,6 @@ describe('test go sec', () => {
       })
 
     const mockPathJoin = jest.spyOn(path, "join").mockReturnValue("Users/test/go/bin");
-    //const mockResolvedPath = jest.spyOn(path, "resolve").mockReturnValue({});
     const mockPathAppend = jest.spyOn(tasks, "appendToPath").mockReturnValue({});
     const mockExit = jest.spyOn(process, "exit").mockImplementation(() => {
     });
@@ -67,7 +66,6 @@ describe('test go sec', () => {
     const val = await goSecApp.goSec()
     expect(() => val).not.toThrowError()
     expect(mockPathJoin).toHaveBeenCalled();
-   // expect(mockResolvedPath).toHaveBeenCalled();
     expect(mockExit).toHaveBeenCalled();
     expect(mockPathAppend).toHaveBeenCalled();
   })
@@ -76,7 +74,7 @@ describe('test go sec', () => {
     var excludeRules = ["G210", "G311"];
     jest.spyOn(tasks, 'getInput')
       .mockImplementation((name) => {
-        if (name === 'staticCheckVersion') return 'latest'
+        if (name === 'goSecVersion') return 'latest'
         if (name === 'excludeRules') return excludeRules
         if (name === 'sourcePath') return 'src/service'
       })
@@ -97,11 +95,10 @@ describe('test go sec', () => {
     const mockPathAppend = jest.spyOn(tasks, "appendToPath").mockReturnValue({});
     const mockExit = jest.spyOn(process, "exit").mockImplementation(() => {
     });
-    const mockCurWorkDir = jest.spyOn(tasks, "getWorkingDir").mockReturnValue("/Users/test/src/service");
 
-    expect(() => goSecApp.goSec()).not.toThrowError()
+    const val = await goSecApp.goSec()
+    expect(() => val).not.toThrowError()
     expect(mockPathJoin).not.toHaveBeenCalled();
-    expect(mockCurWorkDir).not.toHaveBeenCalled();
     expect(mockExit).not.toHaveBeenCalled();
     expect(mockPathAppend).not.toHaveBeenCalled();
   })
@@ -110,7 +107,7 @@ describe('test go sec', () => {
     var excludeRules = ["G210", "G311"];
     jest.spyOn(tasks, 'getInput')
       .mockImplementation((name) => {
-        if (name === 'staticCheckVersion') return 'latest'
+        if (name === 'goSecVersion') return 'latest'
         if (name === 'excludeRules') return excludeRules
         if (name === 'sourcePath') return ''
       })
@@ -131,13 +128,11 @@ describe('test go sec', () => {
     const mockPathAppend = jest.spyOn(tasks, "appendToPath").mockReturnValue({});
     const mockExit = jest.spyOn(process, "exit").mockImplementation(() => {
     });
-    //const mockCurWorkDir = jest.spyOn(tasks, "getWorkingDir").mockReturnValue("/Users/test/src/service");
 
     const val = await goSecApp.goSec()
     expect(() => val).not.toThrowError()
 
     expect(mockPathJoin).toHaveBeenCalled();
-    //expect(mockCurWorkDir).not.toHaveBeenCalled();
     expect(mockExit).toHaveBeenCalled();
     expect(mockPathAppend).toHaveBeenCalled();
   })
@@ -145,7 +140,7 @@ describe('test go sec', () => {
     var excludeRules = ["G210", "G311"];
     jest.spyOn(tasks, 'getInput')
       .mockImplementation((name) => {
-        if (name === 'staticCheckVersion') return 'latest'
+        if (name === 'goSecVersion') return 'latest'
         if (name === 'excludeRules') return excludeRules
         if (name === 'sourcePath') return ''
       })
@@ -166,13 +161,12 @@ describe('test go sec', () => {
     const mockPathAppend = jest.spyOn(tasks, "appendToPath").mockReturnValue({});
     const mockExit = jest.spyOn(process, "exit").mockImplementation(() => {
     });
-    const mockCurWorkDir = jest.spyOn(tasks, "getWorkingDir").mockReturnValue("/Users/test/src/service");
+    const val = await goSecApp.goSec()
+    expect(() => val).not.toThrowError()
 
-    expect(() => goSecApp.goSec()).not.toThrowError()
-    expect(mockPathJoin).not.toHaveBeenCalled();
-    expect(mockCurWorkDir).not.toHaveBeenCalled();
-    expect(mockExit).not.toHaveBeenCalled();
-    expect(mockPathAppend).not.toHaveBeenCalled();
+    expect(mockPathJoin).toHaveBeenCalled();
+    expect(mockExit).toHaveBeenCalled();
+    expect(mockPathAppend).toHaveBeenCalled();
   })
   it('Should throw error when Go sec is not installed', async () => {
     var excludeRules = ["G210", "G311"];
@@ -197,12 +191,11 @@ describe('test go sec', () => {
     const mockPathAppend = jest.spyOn(tasks, "appendToPath").mockReturnValue({});
     const mockExit = jest.spyOn(process, "exit").mockImplementation(() => {
     });
-    const mockCurWorkDir = jest.spyOn(tasks, "getWorkingDir").mockReturnValue("/Users/test/src/service");
+    const val = await goSecApp.goSec()
+    expect(() => val).not.toThrowError()
 
-    expect(() => goSecApp.goSec()).not.toThrowError()
-    expect(mockPathJoin).not.toHaveBeenCalled();
-    expect(mockCurWorkDir).not.toHaveBeenCalled();
-    expect(mockExit).not.toHaveBeenCalled();
-    expect(mockPathAppend).not.toHaveBeenCalled();
+    expect(mockPathJoin).toHaveBeenCalled();
+    expect(mockExit).toHaveBeenCalled();
+    expect(mockPathAppend).toHaveBeenCalled();
   })
 })

@@ -9,11 +9,19 @@ module.exports = {goSec, logErrorAndExit};
  * @returns {Promise<never>}
  */
 async function goSec() {
+  let stdGoOut;
   try {
-    const {stdOut: goPathStdOut, stdErr: goPathStdErr} = (await tasks.execute("go env GOPATH"));
-    if (goPathStdOut) {
-      const {goPathBin} = await installGoSec(goPathStdOut);
-      const {stdOut: goSecVersionStdOut, stdErr: goSecVersionStErr} = (await tasks.execute(`${goPathBin}/gosec -version`));
+    stdGoOut = (await tasks.execute("go env GOPATH"));
+  } catch (e) {
+    logErrorAndExit(e)
+  }
+  if (stdGoOut.stdOut) {
+    try {
+      const {goPathBin} = await installGoSec(stdGoOut.stdOut);
+      const {
+        stdOut: goSecVersionStdOut,
+        stdErr: goSecVersionStErr
+      } = (await tasks.execute(`${goPathBin}/gosec -version`));
       if (goSecVersionStdOut) {
         tasks.info(`Checking the Go Sec version: [${goSecVersionStdOut.toString()}]`);
         await resolveDirAndRunScan(goPathBin);
@@ -21,12 +29,9 @@ async function goSec() {
         tasks.error(`Command for checking the Go Sec version failed with error: [${goSecVersionStErr}]`);
         process.exit(1)
       }
-    } else {
-      tasks.error(`Not able to find Go which is mandatory for go sec with error: ${goPathStdErr}.Hence could not perform Go sec, please use setup-go task`);
-      process.exit(1)
+    }catch (e){
+      logErrorAndExit(e)
     }
-  } catch (e) {
-    logErrorAndExit(e)
   }
 }
 
@@ -39,12 +44,11 @@ function resolveSourcePath() {
   const resourceName = tasks.getInput('resourceName');
   const sourcePath = tasks.getInput('sourcePath');
   if (resourceName === '') {
-    throw new Error('One of mandatory input[resourceName] is missing. Please verify Static Security Check task inputs.');
+    throw new Error('One of mandatory input[resourceName] is missing. Please verify Go Security Check task inputs.');
   }
   const resource = tasks.getResource(resourceName)
-  //const op = tasks.getVariable(`res_${resource.resourceName}_resourcePath`)
-  if(sourcePath === ''){
-    return resource.resourcePath ;
+  if (sourcePath === '') {
+    return resource.resourcePath;
   } else {
     return path.resolve(resource.resourcePath, sourcePath);
   }
@@ -58,12 +62,12 @@ function getOptions() {
   let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules) {
-    options += '-include ' + includeRules + ' ';
+    options += '-include= ' + includeRules + ' ';
   }
 
   let excludeRules = tasks.getInput("excludeRules")
   if (excludeRules) {
-    options += '-exclude ' + excludeRules + ' ';
+    options += '-exclude= ' + excludeRules + ' ';
   }
 
   let commandArgs = tasks.getInput("commandArgs");
@@ -90,10 +94,11 @@ async function runGoSec(options, goPathBin, resolvedPath) {
     if (commandOutput.stdErr) {
       tasks.info(`Ran go sec with output: [${commandOutput.stdErr}]]`);
     } else {
-      tasks.info(`Error running go sec: [${commandOutput.stdOut}]`);
+      tasks.info(`Ran go sec with output: [${commandOutput.stdOut}]`);
     }
-  } catch (e) {
-    tasks.info(e)
+  } catch (error) {
+    tasks.error(error);
+    tasks.debug(error.stack);
   }
 }
 
@@ -105,7 +110,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
 async function resolveDirAndRunScan(goPathBin) {
   let options = getOptions();
   let resolvedPath = resolveSourcePath();
-  await runGoSec(options, goPathBin,resolvedPath);
+  await runGoSec(options, goPathBin, resolvedPath);
 }
 
 /**
