@@ -13,7 +13,8 @@ async function goSec() {
   try {
     stdGoOut = (await tasks.execute("go env GOPATH"));
   } catch (e) {
-    logErrorAndExit(e)
+    tasks.error(e)
+    throw new Error('GO is not installed.Hence cannot proceed with Go Security check')
   }
   if (stdGoOut.stdOut) {
     try {
@@ -92,7 +93,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
   try {
     let commandOutput;
     if (isWindows()) {
-      commandOutput = options ? (await tasks.execute(`CD ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`CD ${resolvedPath} && ${goPathBin}/gosec ./...`));
+      commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} and ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} and ${goPathBin}/gosec ./...`));
     } else {
       commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`));
     }

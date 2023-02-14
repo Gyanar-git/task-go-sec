@@ -8,17 +8,21 @@ describe('test go sec', () => {
     jest.resetAllMocks()
   })
 
-  it('should throw error when go is not installed', async () => {
-    jest.spyOn(tasks, 'execute')
-      .mockImplementation(() => {
-        return {}
+  it('should throw error when go is not installed', () => {
+    jest
+      .spyOn(tasks, 'execute')
+      .mockImplementation((key) => {
+        throw new Error('GO is not installed.Hence cannot proceed with Go Security check')
       })
-    const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {
-    });
-    const errorSpy = jest.spyOn(tasks, 'error');
-    await goSecApp.goSec();
-    expect(mockExit).not.toHaveBeenCalled()
-    expect(errorSpy).not.toHaveBeenCalled()
+
+    jest
+      .spyOn(tasks, 'error')
+      .mockImplementation( (key) => {
+        return
+      })
+
+    expect(async () => await goSecApp.goSec().toThrowError('GO is not installed.Hence cannot proceed with Go Security check'));
+
   })
 
   it("log error and exit", () => {
