@@ -62,12 +62,12 @@ function getOptions() {
   let options = '';
   let includeRules = tasks.getInput("includeRules");
   if (includeRules) {
-    options += '-include=' + includeRules + ' ';
+    options += '-include=' + `"${includeRules}"` + ' ';
   }
 
   let excludeRules = tasks.getInput("excludeRules")
   if (excludeRules) {
-    options += '-exclude=' + excludeRules + ' ';
+    options += '-exclude=' + `"${excludeRules}"` + ' ';
   }
 
   let commandArgs = tasks.getInput("commandArgs");
@@ -90,7 +90,7 @@ function getOptions() {
  */
 async function runGoSec(options, goPathBin, resolvedPath) {
   try {
-    const commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec "${options}" ./...`)) : (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`));
+    const commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`));
     if (commandOutput.stdErr) {
       tasks.info(`Ran go sec with output: [${commandOutput.stdErr}]]`);
     } else {
