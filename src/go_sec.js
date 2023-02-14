@@ -93,7 +93,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
   try {
     let commandOutput;
     if (isWindows()) {
-      commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} and ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} and ${goPathBin}/gosec ./...`));
+      commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} ; ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} ; ${goPathBin}/gosec ./...`));
     } else {
       commandOutput = options ? (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ${options} ./...`)) : (await tasks.execute(`cd ${resolvedPath} && ${goPathBin}/gosec ./...`));
     }
