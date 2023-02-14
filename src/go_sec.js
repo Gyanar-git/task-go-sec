@@ -109,6 +109,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
  */
 async function resolveDirAndRunScan(goPathBin) {
   let options = getOptions();
+  tasks.info("OPTIONS:" +options)
   let resolvedPath = resolveSourcePath();
   await runGoSec(options, goPathBin, resolvedPath);
 }
