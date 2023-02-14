@@ -115,7 +115,6 @@ async function runGoSec(options, goPathBin, resolvedPath) {
  */
 async function resolveDirAndRunScan(goPathBin) {
   let options = getOptions();
-  tasks.info("OPTIONS:" +options)
   let resolvedPath = resolveSourcePath();
   await runGoSec(options, goPathBin, resolvedPath);
 }
@@ -142,7 +141,7 @@ async function installGoSec(goPath) {
       command = `go install github.com/securego/gosec/v2/cmd/gosec@${goSecVersion} 2>/dev/null`;
     }
     const {
-      stdOut: stdOutInstall, stdErr: stdErrInstall
+      stdErr: stdErrInstall
     } = (await tasks.execute(`${command}`));
     if (stdErrInstall) {
       tasks.error(`Failed to install Go Sec with error:[${stdErrInstall}] `);
