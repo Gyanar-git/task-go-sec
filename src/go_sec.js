@@ -103,8 +103,7 @@ async function runGoSec(options, goPathBin, resolvedPath) {
       tasks.info(`Ran go sec with output: [${commandOutput.stdOut}]`);
     }
   } catch (error) {
-    tasks.error(error);
-    tasks.debug(error.stack);
+    logErrorAndExit(error)
   }
 }
 
