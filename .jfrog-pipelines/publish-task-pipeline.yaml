@@ -43,6 +43,7 @@ pipelines:
             - pushd $res_securitycheck_publish_gitrepo_resourcePath
             # Configure JFrog CLI
             - jfrog npmc --repo-resolve $RESOLVE_REPO
+            - jfrog npm install https://pipeecosys1.jfrogdev.org/artifactory/npm-virtual/jfrog-pipelines-tasks/-/jfrog-pipelines-tasks-0.0.13.tgz
             # Install npm dependencies
             - jfrog npm install
             # Build task runnable script bundled with dependencies
